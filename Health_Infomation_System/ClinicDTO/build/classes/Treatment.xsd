@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema targetNamespace="http://www.example.org/clinic/TreatmentDTO"
+	elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://www.example.org/clinic/TreatmentDTO" xmlns:dap="http://www.example.org/schemas/clinic/rest/dap"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" 
+	jaxb:version="2.0">
+
+	<annotation>
+		<appinfo>
+			<jaxb:globalBindings>
+				<jaxb:javaType name="java.util.Date" xmlType="date"
+					parseMethod="edu.stevens.cs.cs548.clinic.service.dto.DateAdapter.parseDate"
+					printMethod="edu.stevens.cs.cs548.clinic.service.dto.DateAdapter.printDate" />
+			</jaxb:globalBindings>
+		</appinfo>
+	</annotation>
+
+
+	<element name="treatment" type="tns:treatmentType" />
+
+	<complexType name="treatmentType">
+		<sequence>
+			<element name="tid" type="int"></element>
+			<element name="patient" type="int"></element>
+			<element name="provider" type="int"></element>
+			<choice>
+				<element name="Drug" type="tns:DrugTreatmentType"></element>
+				<element name="Surgery" type="tns:SurgeryType"></element>
+				<element name="Radiology" type="tns:RadiologyType"></element>
+			</choice>
+		</sequence>
+	</complexType>
+
+
+
+	<complexType name="DrugTreatmentType">
+		<sequence>
+			<element name="name" type="string"></element>
+			<element name="dosage" type="int"></element>
+		</sequence>
+	</complexType>
+
+	<complexType name="SurgeryType">
+		<sequence>
+			<element name="dateOfSurgery" type="date"></element>
+		</sequence>
+	</complexType>
+
+	<complexType name="RadiologyType">
+		<sequence>
+			<element name="datesOfRad" type="tns:DatesOfRadType"></element>
+		</sequence>
+	</complexType>
+
+	<simpleType name="DatesOfRadType">
+		<list itemType="date"></list>
+	</simpleType>
+
+
+
+	<element name="patient" type="tns:patientType"></element>
+
+	<complexType name="patientType">
+		<sequence>
+			<element name="name" type="string"></element>
+			<element name="dob" type="date"></element>
+		</sequence>
+	</complexType>
+</schema>
